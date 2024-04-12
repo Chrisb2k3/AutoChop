@@ -1,0 +1,8 @@
+    ocr_text = ''.join(str(char) for l_result in t_results for char in l_result)
+
+    # ocr_text += [[str(char) for char in l_result] for l_result in t_results]
+    # for l_result in t_results:
+    #     for char in l_result:
+    #         ocr_text += str(char)
+--------------------------------------------------------------------------------------
+

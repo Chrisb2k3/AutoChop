@@ -1,0 +1,5 @@
+bos_selected:4,2|rss_selected:|blg_selected:|obj_min_powers:80|obj_max_powers:450|scout_list:bos_cerberus.PNG,bos_bayard_knight.PNG|scout_options:593,555,400,400,Landscape,80,450|found_scr_objs:|found_tile_objs:|ocr_scr_location:867,895,159,24|ocr_obj_coords:1025,280,157,79|ocr_bos_lvl:694,235,53,75|ocr_obj_powers:784,205,137,68|CS_goto_coords:941,903;660,668;1304,659;957,913|ocr_center_coords:867,895,159,24
+
+
+1030,203,156,270 - bos coords
+784,186,140,198  - bos power
