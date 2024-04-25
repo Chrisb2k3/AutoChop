@@ -1,8 +1,20 @@
     ocr_text = ''.join(str(char) for l_result in t_results for char in l_result)
 
     # ocr_text += [[str(char) for char in l_result] for l_result in t_results]
+
+
     # for l_result in t_results:
     #     for char in l_result:
     #         ocr_text += str(char)
 --------------------------------------------------------------------------------------
+  ocr_text = ''.join(str(char) for l_each_word in t_list_of_words for char in l_each_word)
+
+  ocr_text += [[char for char in l_each_word] for l_each_word in t_list_of_words]
+
+  File "C:\temp\Python\AutoChop.py", line 309, in find_obj
+    scr_location = g_util.ocr(game_data.d_cookie['ocr_tile_xy_center'])
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\temp\Python\game_util.py", line 64, in ocr
+    ocr_text += [[char for char in l_each_word] for l_each_word in t_list_of_words]
+TypeError: can only concatenate str (not "list") to str
 

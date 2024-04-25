@@ -8,10 +8,11 @@ from tkinter import LEFT, END
 import keyboard
 import pyautogui as pag
 
-import game_util as g_util
-import util
+from util import *
 
-l_obj_found: list = []
+from util.util import *
+from util.game_util import *
+
 g_loop: bool = False
 
 
@@ -20,49 +21,28 @@ g_loop: bool = False
 class GameObj:
     def __init__(self, obj_type):
         self.d_img_files: dict = {}
-        if obj_type == 'bos':
-            obj_index: str = 'bos_img_files'
-        elif obj_type == 'rss':
-            obj_index: str = 'rss_img_files'
-        elif obj_type == 'blg':
-            obj_index: str = 'blg_img_files'
-        else:
-            obj_index: str = 'ui1_img_files'
-
-        util.debug('game_data.d_cookie[obj_index] ', game_data.d_cookie[obj_index])
-
-        if game_data.d_cookie[obj_index]:
-            for value in game_data.d_cookie[obj_index].split(','):
-                l_file_names: list = value
-            for key, value in l_file_names.split(':'):
-                self.d_img_files[key] = value
-            util.debug('self.d_img_files', self.d_img_files)
         self.init_list(obj_type)
 
     def init_list(self, obj_type):
+        dir_files: str = ''
 
-        dir_files: str = game_data.d_cookie['dir_files']
-
-        if not game_data.d_cookie['dir_files']:
-            for line in os.listdir("./images"):
-                if not line == 'unused':
-                    dir_files += util.add_delimiter(dir_files, line, ',')
-                    game_data.d_cookie['dir_files'] = dir_files
+        for line in os.listdir("./images"):
+            if not line == 'unused':
+                dir_files += add_delimiter(dir_files, line, ',')
+                game_data.d_cookie['dir_files'] = dir_files
 
         for file_name in dir_files.split(','):
             obj = re.search(r'^\w{3}', file_name).group(0)
             name = re.search(r'^[\w_{4}]*', file_name).group(0).split('_', 1)[1]
 
             if obj == obj_type:
-                util.debug('name//file_name', name, file_name)
                 self.d_img_files[name] = file_name
 
     @staticmethod
     def scout_selection(selection: str):
         img_file_names: str = game_data.d_cookie['scout_list']
 
-        obj_type = util.regex(selection, ':', '<')
-        selection = util.regex(selection, ':', '>')
+        obj_type, selection = selection.split(':')
 
         if len(selection):
             if obj_type == 'rss':
@@ -79,8 +59,8 @@ class GameObj:
             for choice in selection.split(','):
                 for i, key in enumerate(l_key_names):
                     if i == int(choice):
-                        # util.debug('i//key', i, key)
-                        img_file_names += util.add_delimiter(img_file_names, d_img_files[key], ',')
+                        # debug('i//key', i, key)
+                        img_file_names += add_delimiter(img_file_names, d_img_files[key], ',')
 
             game_data.d_cookie['scout_list'] = img_file_names
 
@@ -99,43 +79,44 @@ class Menu:
         self.frame.pack()
 
         self.label_bos1 = tk.Label(text=self.content_bos1, anchor='n', justify=LEFT)
-        self.label_bos1.place(x=5, y=10, height=300, width=200)
+        self.label_bos1.place(x=5, y=10, height=320, width=200)
         self.label_bos2 = tk.Label(text=self.content_bos2, anchor='n', justify=LEFT)
-        self.label_bos2.place(x=200, y=10, height=300, width=200)
+        self.label_bos2.place(x=200, y=10, height=320, width=200)
         self.label_rss = tk.Label(text=self.content_rss, anchor='n', justify=LEFT)
-        self.label_rss.place(x=400, y=10, height=300, width=100)
+        self.label_rss.place(x=380, y=10, height=320, width=100)
         self.label_blg = tk.Label(text=self.content_blg, anchor='n', justify=LEFT)
-        self.label_blg.place(x=510, y=10, height=300, width=100)
+        self.label_blg.place(x=510, y=10, height=320, width=100)
 
         self.input_bos = tk.Text(self.frame)
-        self.input_bos.place(x=10, y=320, height=30, width=350)
+        self.input_bos.place(x=10, y=330, height=30, width=350)
         self.input_bos.insert("1.0", game_data.d_cookie['bos_selected'])
 
         self.input_rss = tk.Text(self.frame)
-        self.input_rss.place(x=380, y=320, height=30, width=110)
+        self.input_rss.place(x=380, y=330, height=30, width=110)
         self.input_rss.insert("1.0", game_data.d_cookie['rss_selected'])
 
         self.input_blg = tk.Text(self.frame)
-        self.input_blg.place(x=500, y=320, height=30, width=120)
+        self.input_blg.place(x=500, y=330, height=30, width=120)
         self.input_blg.insert("1.0", game_data.d_cookie['blg_selected'])
 
-        self.label_input = tk.Label(text="Selection: (Boss)\t\t\t            (RSS)\t   (Buildings)", anchor='w')
+        self.label_input = tk.Label(text="  Selection:  BOSS\t\t\t           RSS\t    BUILDINGS", anchor='w')
         self.label_input.place(x=0, y=360, height=30, width=600)
 
-        scout_menu_options = (f'1. Starting X Coordinates: \n'
-                              f'2. Starting Y Coordinates: \n'
-                              f'4. Horizontal Distance(km) to Scout Left:\n'
-                              f'3. Vertical Distance(km) to Scout Down: \n'
-                              f'5. Screen Mode (Portrait/Landscape): \n'
-                              f'6. Minimum Power Value: \n'
-                              f'7. Maximum Power Value: \n\n'
-                              f'Example: 200,300,1200,350,Landscape,100,900')
+        scout_menu_options = (f'1. Starting X Coordinate\n'
+                              f'2. Starting Y Coordinate\n'
+                              f'4. Horizontal Distance(km) to Scout Left\n'
+                              f'3. Vertical Distance(km) to Scout Down\n'
+                              f'5. Screen Mode (Portrait/Landscape)\n'
+                              f'6. Minimum Power Value\n'
+                              f'7. Maximum Power Value\n'
+                              f'8. Share Link to (Image Filename)\n\n'
+                              f'Example: 200,300,1200,350,Landscape,100,900,logo_sav')
 
         self.label_scout_options = tk.Label(text=scout_menu_options, anchor='n', justify=LEFT)
-        self.label_scout_options.place(x=10, y=400, height=200, width=400)
+        self.label_scout_options.place(x=10, y=410, height=200, width=450)
 
         self.input_scout_options = tk.Text(self.frame)
-        self.input_scout_options.place(x=10, y=600, height=30, width=480)
+        self.input_scout_options.place(x=10, y=630, height=30, width=600)
         self.input_scout_options.insert("1.0", game_data.d_cookie['scout_options'])
 
         btn_cancel = tk.Button(self.frame, text="Cancel", command=self.hide_window)
@@ -184,8 +165,8 @@ class Menu:
 
 class GameData:
     def __init__(self):
-        self.max_tile_left: int = 0
-        self.max_tile_down: int = 0
+        self.max_game_left: int = 0
+        self.max_game_down: int = 0
         self.start_x: int = 0
         self.start_y: int = 0
         self.scr_mode = ''
@@ -197,22 +178,21 @@ class GameData:
             'bos_img_files': '',
             'rss_img_files': '',
             'blg_img_files': '',
-            'dir_files': '',
             'ui1_img_files': '',
             'bos_selected': '',
             'rss_selected': '',
             'blg_selected': '',
-            'obj_min_powers': '',
-            'obj_max_powers': '',
+            'obj_min_power': '',
+            'obj_max_power': '',
             'scout_list': '',
             'scout_options': '',
             'found_scr_objs': '',
-            'found_tile_objs': '',
-            'ocr_tile_xy_center': '',
+            'ocr_game_xy': '',
             'ocr_obj_xy': '',
             'ocr_bos_lvl': '',
-            'ocr_obj_powers': '',
-            'CS_goto_xy': ''
+            'ocr_obj_power': '',
+            'share_link_to': '',
+            'cs_goto_xy': ''
         }
         self.data_file('r')  # Setup d_cookie
         self.set_variable()
@@ -227,21 +207,24 @@ class GameData:
                 elif i == 1:
                     self.start_y = int(item)
                 elif i == 2:
-                    self.max_tile_left = self.start_x - math.ceil(int(item) * .73)  # .73 dist conversion to tile coord
+                    self.max_game_left = self.start_x - math.ceil(int(item) * .73)  # .73 dist conversion to tile coord
                 elif i == 3:
-                    self.max_tile_down = self.start_y + math.ceil(int(item) * .73)  # .73 dist conversion to tile coord
+                    self.max_game_down = self.start_y + math.ceil(int(item) * .73)  # .73 dist conversion to tile coord
                 elif i == 4:
                     self.scr_mode = item
                 elif i == 5:
-                    self.d_cookie['obj_min_powers'] = item
+                    self.d_cookie['obj_min_power'] = item
                 elif i == 6:
-                    self.d_cookie['obj_max_powers'] = item
+                    self.d_cookie['obj_max_power'] = item
+                elif i == 7:
+                    self.d_cookie['share_link_to'] = item
 
-        self.d_cookie['ocr_tile_xy_center'] = '867,895,159,24'
+        self.d_cookie['ocr_game_xy'] = '867,895,159,24'
         self.d_cookie['ocr_bos_lvl'] = '694,235,53,75'
-        self.d_cookie['ocr_obj_powers'] = '784,186,140,198'
+        self.d_cookie['ocr_obj_power'] = '784,186,140,198'
+        self.d_cookie['ocr_barb_power'] = '1240,679,281,61'
         self.d_cookie['ocr_obj_xy'] = '1030,203,156,270'
-        self.d_cookie['CS_goto_xy'] = '941,903;660,668;1304,659;957,913'
+        self.d_cookie['cs_goto_xy'] = '941,903;660,668;1304,659;957,913'
 
     def data_file(self, action: str = 'w', update_item: str = 'py_cookie'):
         save_str: str = ''
@@ -250,22 +233,21 @@ class GameData:
             if action == 'r':
                 for item_line in text_file.read().split('|'):
                     if len(item_line.strip()):
-                        key = util.regex(item_line, ':', '<')
-                        value = util.regex(item_line, ':', '>')
+                        key, value = item_line.split(':')
                         self.d_cookie[key] = value
 
             if action == 'w':
                 for key, value in self.d_cookie.items():
                     concat_str = f'{key.strip()}:{value.strip()}'
-                    save_str += util.add_delimiter(save_str, concat_str, '|')
+                    save_str += add_delimiter(save_str, concat_str, '|')
 
                 text_file.write(save_str)
 
 
 class ScreenNavigation:
     def __init__(self):
-        self.x: int = game_data.start_x
-        self.y: int = game_data.start_y
+        self.x: int = 0
+        self.y: int = 0
 
         if game_data.scr_mode == 'Landscape':
             val1, val2, val3, val4 = 11, 12, 11, 11
@@ -284,141 +266,144 @@ class ScreenNavigation:
 
 
 # ------------------> FUNCTIONS -----------------------------------------------
-def find_obj() -> None:
-    old_value_x: int = 0
-    old_value_y: int = 0
+def find_obj() -> bool:
+    saved_x: int = 0
+    saved_y: int = 0
     found_scr_coords: str = ''
-    found_tile_coords: str = ''
-
-    global l_obj_found
-    expired_time: float = 0
+    found: bool = False
 
     # pag.useImageNotFoundException()
     try:
         for img_file_name in game_data.d_cookie['scout_list'].split(','):
-            util.debug('img_file_name', img_file_name)
-            l_obj_found.append(list(pag.locateAllOnScreen(game_data.img_path + img_file_name, confidence=0.7)))
-            util.debug('l_obj_found -try', l_obj_found, prompt=True)
+            all_occurrences = pag.locateAllOnScreen(game_data.img_path + img_file_name, confidence=0.7)
+
+            if all_occurrences:
+                for occurrence in all_occurrences:
+                    scr_x = int(occurrence.left + (occurrence.width / 2))
+                    scr_y = int(occurrence.top + (occurrence.height / 2))
+
+                    if not coords_logged(scr_x, scr_y, saved_x, saved_y):  # group same occurrence to one obj
+                        found_scr_coords += add_delimiter(found_scr_coords, f'{scr_x},{scr_y}', ';')
+                        saved_x, saved_y = scr_x, scr_y
+                        found = True
+
+                game_data.d_cookie['found_scr_objs'] = found_scr_coords
 
     except:
-        l_obj_found.clear()
+        print('in except to find obj')
+
     else:
+        print('in else to find obj')
         pass
 
-    if l_obj_found:
-        scr_location = g_util.ocr(game_data.d_cookie['ocr_tile_xy_center'])
-        scr_location = f'{g_util.scrub_data(scr_location, source='ocr', return_val='a_str')}:'
+    debug('l_obj_found??', game_data.d_cookie['found_scr_objs'])
 
-        for each_list in l_obj_found:
-            for box in each_list:
-                scr_x, scr_y = pag.center(box)  # extract scr x/y coords of found obj
-
-                if not g_util.coords_logged(scr_x, scr_y, old_value_x, old_value_y):  # group same obj findings
-                    found_scr_coords += util.add_delimiter(found_scr_coords, f'{scr_x},{scr_y}', ';')
-                    old_value_x, old_value_y = scr_x, scr_y
-                    tile_x, tile_y = get_tile_coords(scr_x, scr_y)
-                    get_tile_coords(scr_x, scr_y)
-                    found_tile_coords += util.add_delimiter(found_tile_coords, f'{tile_x},{tile_y}', ';')
-
-        util.debug('out of loop // found_scr_coords// found_tile_coords', found_scr_coords,
-                   found_tile_coords, prompt=True)
-        game_data.d_cookie['found_scr_objs'] = scr_location + found_scr_coords
-        game_data.d_cookie['found_tile_objs'] = scr_location + found_tile_coords
-
-        l_obj_found.clear()
+    return found
 
 
-def get_tile_coords(scr_x: int, scr_y: int) -> list:
-    power_value = ''
+def check_obj_power(scr_x: int, scr_y: int) -> bool:
+    validated: bool = False
     pag.click(scr_x, scr_y, 1, 1, 'left')  # click on found obj
     pag.sleep(1)
 
     if find_img_and_click(game_ui1.d_img_files['attack']):
-
         # get ocr obj powers
-        ocr_powers: str = g_util.ocr(game_data.d_cookie['ocr_obj_powers'])
-        regex_result: str = util.regex(ocr_powers, separator='.', grab='<')
-        obj_powers: list = g_util.scrub_data(regex_result, source='ocr')
+        ocr_power: str = ocr(game_data.d_cookie['ocr_obj_power'])
+        obj_power: list = scrub_data(ocr_power.split('.')[0], source='ocr')
 
-        # power_value: str = [value for value in obj_powers]
-        for value in obj_powers:
-            power_value = value
+        for value in obj_power:
+            min_val = int(game_data.d_cookie['obj_min_power'])
+            max_val = int(game_data.d_cookie[
+                              'obj_max_power'])
 
-        if power_value in range(int(game_data.d_cookie['obj_min_powers']), int(game_data.d_cookie['obj_max_powers'])):
-            obj_tile_coords: str = g_util.ocr(game_data.d_cookie['ocr_obj_xy'])
-            obj_tile_coords: list = g_util.scrub_data(obj_tile_coords, source='ocr')
-            util.debug('get_tile_coords()// obj_tile_coords // power_value', 'obj detail screen',
-                       obj_tile_coords, power_value, prompt=True)
+            debug('ocr power scrubbed/stored min/stored max', value,min_val, max_val)
 
-            return obj_tile_coords
+            # if int(value) in range(int(game_data.d_cookie['obj_min_power']), int(game_data.d_cookie['obj_max_power'])):
+            if int(value) in range(min_val, max_val):
+                validated = True
+                pag.hotkey('esc')
 
-    else:
-        print("Image not found")
+    return validated
 
 
-def find_img_and_click(img_file: str) -> bool:
+def find_img_and_click(img_files: str) -> bool:
+    occurrence: tuple = ()
     return_value: bool = False
-    img_file = game_data.img_path + img_file
-    t_result: tuple = pag.locateCenterOnScreen(img_file, confidence=0.7)
 
-    if t_result:
-        scr_x, scr_y = t_result
-        pag.click(scr_x, scr_y, 1, 1, 'left')  # now in obj detail screen
-        return_value = True
+    # pag.useImageNotFoundException()
+    try:
+        for each_img in img_files.split(','):
+            img_file = game_data.img_path + each_img
+            # debug('ui image file',img_file, prompt=True)
+            occurrence = pag.locateCenterOnScreen(img_file, confidence=0.7)
+
+        if occurrence:
+            scr_x: int = int(occurrence.x)
+            scr_y: int = int(occurrence.y)
+
+            pag.click(scr_x, scr_y, 1, 1, 'left')  # now in obj detail screen
+            return_value = True
+
+    except:
+        pass
+    else:
+        pass
 
     return return_value
 
 
-def process_found_objs():
-    scr_id_xy: str = util.regex(game_data.d_cookie['found_tile_objs'], ':', '<').strip()
-    found_coords: str = util.regex(game_data.d_cookie['found_tile_objs'], ':', '>').strip()
+def process_found_obj(scr_x: int, scr_y: int) -> None:
+    i: int = 1
 
-    x, y = scr_id_xy.split(',')
-    g_util.goto_coords(x, y, game_data)  # goto current screen
+    if check_obj_power(scr_x, scr_y):
 
-    for coord in found_coords.split(';'):
-        x, y = coord.split(',')
-        # g_util.goto_coords(x, y, game_data)  # goto current screen
-        pag.click(x, y, 1, 1, 'left')  # click on found obj
+        for coord in game_data.d_cookie['found_scr_objs'].split(';'):
+            debug('found obj count:', i)
+            i += 1
+            goto_coords(nav.x, nav.y, game_data)  # goto current scr / power check might've moved scr coords
 
-        find_img_and_click(game_ui1.d_img_files['share'])
+            found_x, found_y = coord.split(',')
+            debug('each_coord/found_x/found_y',coord,found_x,found_y)
+            pag.click(int(found_x), int(found_y), 1, 1, 'left')  # click on found obj
+
+            find_img_and_click(game_ui1.d_img_files['share'])
+            find_img_and_click(game_car.d_img_files[game_data.d_cookie['share_link_to']])
+            find_img_and_click(game_ui1.d_img_files['confirm'])
 
     game_data.d_cookie['found_scr_objs'] = ''  # Reset
 
 
 def main() -> None:
-    global l_obj_found
     global g_loop
 
     pag.sleep(3)  # seconds
-    keyboard.add_hotkey('f2', util.pause)
-    keyboard.add_hotkey('q', util.exit_loop)  # Register the 'q' key to call the exit_loop function
+    keyboard.add_hotkey('f2', pause)
+    keyboard.add_hotkey('q', exit_loop)  # Register the 'q' key to call the exit_loop function
 
     g_loop = True
     while g_loop:
-        while nav.y < game_data.max_tile_down:
-            while nav.x > game_data.max_tile_left:
-                pag.sleep(2)
+        nav.x = game_data.start_x
+        nav.y = game_data.start_y
 
+        while nav.y < game_data.max_game_down:
+            while nav.x > game_data.max_game_left:
                 loop_time = time()
                 pag.screenshot(region=(nav.scan_area_x, nav.scan_area_y, nav.scan_area_w, nav.scan_area_h))
                 print("FPS {}".format(1 / (time() - loop_time)))
 
-                g_util.goto_coords(nav.x, nav.y, game_data)  # goto current screen
-                find_obj()  # find all instances of the obj(s) on current screen
+                goto_coords(nav.x, nav.y, game_data)  # goto current screen
+                pag.sleep(2)  # wait for screen to refresh
 
-                if game_data.d_cookie['found_scr_objs']:
-                    found_coords: str = util.regex(game_data.d_cookie['found_scr_objs'], ':', '>')
-                    for pair in g_util.scrub_data(found_coords):
-                        scr_x, scr_y = pair
-                        get_tile_coords(int(scr_x), int(scr_y))
+                if find_obj():
+                    for pair_xy in game_data.d_cookie['found_scr_objs'].split(';'):
+                        scr_x, scr_y = pair_xy.split(',')
+                        process_found_obj(int(scr_x), int(scr_y))
 
-                    process_found_objs()
                     game_data.d_cookie['found_scr_objs'] = ''  # Reset
                 nav.x -= nav.next_scr_left_x
                 nav.y += nav.next_scr_left_y
 
-    print('Application Exit.')
+    print('exiting AC')
 
 
 if __name__ == "__main__":
@@ -426,11 +411,10 @@ if __name__ == "__main__":
     game_bos = GameObj('bos')
     game_rss = GameObj('rss')
     game_blg = GameObj('blg')
-    game_ui1 = GameObj('ui1')
-    # game_idl = GameObj('idl')
+    game_ui1 = GameObj('ui1')  # options or prompts
+    game_car = GameObj('car')  # non-world click area: menu selection etc
+    #  debug('game_car',game_car.d_img_files,prompt=True)
     scout_menu = Menu()
     scout_menu.root.mainloop()
     nav = ScreenNavigation()
     main()
-    # city_obj = GameObj.create_img_file_obj('cty')   # In city objects
-    # ui_obj = GameObj.create_img_file_obj('uii')     # user interface items

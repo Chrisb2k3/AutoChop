@@ -1,0 +1,294 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Try the new cross-platform PowerShell https://aka.ms/pscore6
+
+(venv) PS C:\temp\Python> git --version
+git version 2.44.0.windows.1
+(venv) PS C:\temp\Python> git remote add origin https://github.com/Chrisb2k3/AutoChop.git
+fatal: not a git repository (or any of the parent directories): .git
+(venv) PS C:\temp\Python> git branch -M main
+fatal: not a git repository (or any of the parent directories): .git
+(venv) PS C:\temp\Python> git status              
+fatal: not a git repository (or any of the parent directories): .git
+(venv) PS C:\temp\Python> git init
+Initialized empty Git repository in C:/temp/Python/.git/
+On branch master
+
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        .idea/
+        AutoChop.py
+        CookieAC.txt
+        Python.code-workspace
+        __pycache__/
+        archive/
+        cookiepy.txt
+        docs/
+        game_util.py
+        images/
+        requirements.txt
+        sample1.py
+        screenshot.png
+        temp.py
+        test.py
+        util.py
+        windowcapture.py
+
+nothing added to commit but untracked files present (use "git add" to track)
+(venv) PS C:\temp\Python> git add .
+warning: in the working copy of '.idea/inspectionProfiles/profiles_settings.xml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'windowcapture.py', LF will be replaced by CRLF the next time Git touches it
+(venv) PS C:\temp\Python> git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   .idea/.gitignore
+        new file:   .idea/Python.iml
+        new file:   .idea/inspectionProfiles/profiles_settings.xml
+        new file:   .idea/misc.xml
+        new file:   .idea/modules.xml
+        new file:   .idea/vcs.xml
+        new file:   AutoChop.py
+        new file:   CookieAC.txt
+        new file:   Python.code-workspace
+        new file:   __pycache__/AutoChop.cpython-312.pyc
+        new file:   __pycache__/game_util.cpython-312.pyc
+        new file:   __pycache__/pyAC.cpython-312.pyc
+        new file:   __pycache__/util.cpython-312.pyc
+        new file:   __pycache__/windowcapture.cpython-312.pyc
+        new file:   archive/AutoChop - 240330.py
+        new file:   archive/TileDetection - backup 240327.py
+        new file:   archive/selections from menu.txt
+        new file:   cookiepy.txt
+        new file:   docs/bugs.txt
+        new file:   game_util.py
+        new file:   images/blg_arc_barb.PNG
+        new file:   images/blg_pyramid.PNG
+        new file:   images/bos_aglaope.PNG
+        new file:   images/bos_ammit.PNG
+        new file:   images/bos_bayard_knight.PNG
+        new file:   images/bos_behemoth.PNG
+        new file:   images/bos_cerberus.PNG
+        new file:   images/bos_fafnir.PNG
+        new file:   images/bos_golem.PNG
+        new file:   images/bos_hydra.PNG
+        new file:   images/bos_ifrit.PNG
+        new file:   images/bos_kamaitachi.PNG
+        new file:   images/bos_nian.PNG
+        new file:   images/bos_pan.PNG
+        new file:   images/bos_phoenix.PNG
+        new file:   images/bos_sphinx.PNG
+        new file:   images/bos_warlord.PNG
+        new file:   images/bos_witch.PNG
+        new file:   images/bos_ymirs.PNG
+        new file:   images/idl_blg_3.PNG
+        new file:   images/lnk_NIA.PNG
+        new file:   images/rss_food.PNG
+        new file:   images/rss_ore.PNG
+        new file:   images/rss_stones.PNG
+        new file:   images/rss_wood.PNG
+        new file:   images/ui1_attack.PNG
+        new file:   images/ui1_declare_war.PNG
+        new file:   images/ui1_share.PNG
+        new file:   images/unused/boss_ymirs.PNG
+        new file:   images/unused/idl_bos_1.PNG
+        new file:   images/unused/idl_bos_2.PNG
+        new file:   images/unused/idl_bos_3.PNG
+        new file:   images/unused/idl_bos_4.PNG
+        new file:   images/unused/idl_bos_5.PNG
+        new file:   images/unused/idl_bos_7.PNG
+        new file:   sample1.py
+        new file:   screenshot.png
+        new file:   temp.py
+        new file:   test.py
+        new file:   util.py
+        new file:   windowcapture.py
+
+(venv) PS C:\temp\Python> git commit -m "initial command"
+Author identity unknown
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'Leno3@LAPTOP-16KIH1RR.(none)')
+(venv) PS C:\temp\Python> git log
+fatal: your current branch 'master' does not have any commits yet
+(venv) PS C:\temp\Python> git config --global user.name "Chris Bui"
+(venv) PS C:\temp\Python> git config --global user.email "chris.bui@gmail.com"
+(venv) PS C:\temp\Python> git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   .idea/.gitignore
+        new file:   .idea/Python.iml
+        new file:   .idea/inspectionProfiles/profiles_settings.xml
+        new file:   .idea/misc.xml
+        new file:   .idea/modules.xml
+        new file:   .idea/vcs.xml
+        new file:   AutoChop.py
+        new file:   CookieAC.txt
+        new file:   Python.code-workspace
+        new file:   __pycache__/AutoChop.cpython-312.pyc
+        new file:   __pycache__/game_util.cpython-312.pyc
+        new file:   __pycache__/pyAC.cpython-312.pyc
+        new file:   __pycache__/util.cpython-312.pyc
+        new file:   __pycache__/windowcapture.cpython-312.pyc
+        new file:   archive/AutoChop - 240330.py
+        new file:   archive/TileDetection - backup 240327.py
+        new file:   archive/selections from menu.txt
+        new file:   cookiepy.txt
+        new file:   docs/bugs.txt
+        new file:   game_util.py
+        new file:   images/blg_arc_barb.PNG
+        new file:   images/blg_pyramid.PNG
+        new file:   images/bos_aglaope.PNG
+        new file:   images/bos_ammit.PNG
+        new file:   images/bos_bayard_knight.PNG
+        new file:   images/bos_behemoth.PNG
+        new file:   images/bos_cerberus.PNG
+        new file:   images/bos_fafnir.PNG
+        new file:   images/bos_golem.PNG
+        new file:   images/bos_hydra.PNG
+        new file:   images/bos_ifrit.PNG
+        new file:   images/bos_kamaitachi.PNG
+        new file:   images/bos_nian.PNG
+        new file:   images/bos_pan.PNG
+        new file:   images/bos_phoenix.PNG
+        new file:   images/bos_sphinx.PNG
+        new file:   images/bos_warlord.PNG
+        new file:   images/bos_witch.PNG
+        new file:   images/bos_ymirs.PNG
+        new file:   images/idl_blg_3.PNG
+        new file:   images/lnk_NIA.PNG
+        new file:   images/rss_food.PNG
+        new file:   images/rss_ore.PNG
+        new file:   images/rss_stones.PNG
+        new file:   images/rss_wood.PNG
+        new file:   images/ui1_attack.PNG
+        new file:   images/ui1_declare_war.PNG
+        new file:   images/ui1_share.PNG
+        new file:   images/unused/boss_ymirs.PNG
+        new file:   images/unused/idl_bos_1.PNG
+        new file:   images/unused/idl_bos_2.PNG
+        new file:   images/unused/idl_bos_3.PNG
+        new file:   images/unused/idl_bos_4.PNG
+        new file:   images/unused/idl_bos_5.PNG
+        new file:   images/unused/idl_bos_6.PNG
+        new file:   images/unused/idl_bos_7.PNG
+        new file:   images/unused/idl_bos_8.PNG
+        new file:   images/unused/opt_share.PNG
+        new file:   requirements.txt
+        new file:   sample1.py
+        new file:   screenshot.png
+        new file:   temp.py
+        new file:   test.py
+        new file:   util.py
+        new file:   windowcapture.py
+
+(venv) PS C:\temp\Python> git commit -m "initial command"                     
+[master (root-commit) 1379dba] initial command
+ 66 files changed, 1581 insertions(+)
+ create mode 100644 .idea/.gitignore
+ create mode 100644 .idea/Python.iml
+ create mode 100644 .idea/inspectionProfiles/profiles_settings.xml
+ create mode 100644 .idea/misc.xml
+ create mode 100644 .idea/modules.xml
+ create mode 100644 .idea/vcs.xml
+ create mode 100644 AutoChop.py
+ create mode 100644 CookieAC.txt
+ create mode 100644 Python.code-workspace
+ create mode 100644 __pycache__/AutoChop.cpython-312.pyc
+ create mode 100644 __pycache__/game_util.cpython-312.pyc
+ create mode 100644 __pycache__/pyAC.cpython-312.pyc
+ create mode 100644 __pycache__/util.cpython-312.pyc
+ create mode 100644 __pycache__/windowcapture.cpython-312.pyc
+ create mode 100644 archive/AutoChop - 240330.py
+ create mode 100644 archive/TileDetection - backup 240327.py
+ create mode 100644 archive/selections from menu.txt
+ create mode 100644 cookiepy.txt
+ create mode 100644 docs/bugs.txt
+ create mode 100644 game_util.py
+ create mode 100644 images/blg_arc_barb.PNG
+ create mode 100644 images/blg_pyramid.PNG
+ create mode 100644 images/bos_aglaope.PNG
+ create mode 100644 images/bos_ammit.PNG
+ create mode 100644 images/bos_bayard_knight.PNG
+ create mode 100644 images/bos_behemoth.PNG
+ create mode 100644 images/bos_cerberus.PNG
+ create mode 100644 images/bos_fafnir.PNG
+ create mode 100644 images/bos_golem.PNG
+ create mode 100644 images/bos_hydra.PNG
+ create mode 100644 images/bos_ifrit.PNG
+ create mode 100644 images/bos_kamaitachi.PNG
+ create mode 100644 images/bos_nian.PNG
+ create mode 100644 images/bos_pan.PNG
+ create mode 100644 images/bos_phoenix.PNG
+ create mode 100644 images/bos_sphinx.PNG
+ create mode 100644 images/bos_warlord.PNG
+ create mode 100644 images/bos_witch.PNG
+ create mode 100644 images/bos_ymirs.PNG
+ create mode 100644 images/idl_blg_3.PNG
+ create mode 100644 images/lnk_chopper.PNG
+ create mode 100644 images/rss_food.PNG
+ create mode 100644 images/ui1_attack.PNG
+ create mode 100644 images/unused/boss_ymirs.PNG
+ create mode 100644 images/unused/idl_bos_1.PNG
+ create mode 100644 images/unused/idl_bos_2.PNG
+ create mode 100644 images/unused/idl_bos_3.PNG
+ create mode 100644 images/unused/idl_bos_4.PNG
+ create mode 100644 images/unused/idl_bos_6.PNG
+ create mode 100644 images/unused/idl_bos_7.PNG
+ create mode 100644 images/unused/opt_share.PNG
+ create mode 100644 screenshot.png
+ create mode 100644 temp.py
+ create mode 100644 test.py
+ create mode 100644 util.py
+ create mode 100644 windowcapture.py
+(venv) PS C:\temp\Python> git status
+On branch master
+nothing to commit, working tree clean
+(venv) PS C:\temp\Python> git remote add origin https://github.com/Chrisb2k3/AutoChop.git
+(venv) PS C:\temp\Python> git branch -M main
+(venv) PS C:\temp\Python> git branch             
+* main
+(venv) PS C:\temp\Python> git branch master
+(venv) PS C:\temp\Python> git log
+commit 1379dba5d9b8adb56ca5c129f6b32de3716fc291 (HEAD -> main, master)
+Author: Chris Bui <chris.bui@gmail.com>
+Date:   Thu Apr 11 18:05:08 2024 -0700
+
+    initial command
+(venv) PS C:\temp\Python> git status
+On branch main
+nothing to commit, working tree clean
+(venv) PS C:\temp\Python> git remote add origin https://github.com/Chrisb2k3/AutoChop.git
+error: remote origin already exists.
+(venv) PS C:\temp\Python> git branch -M main
+(venv) PS C:\temp\Python> git push -u origin main
+info: please complete authentication in your browser...
+Enumerating objects: 75, done.
+Counting objects: 100% (75/75), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (71/71), done.
+Writing objects: 100% (75/75), 286.64 KiB | 6.23 MiB/s, done.
+Total 75 (delta 4), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (4/4), done.
+To https://github.com/Chrisb2k3/AutoChop.git
+ * [new branch]      main -> main
+branch 'main' set up to track 'origin/main'.
+(venv) PS C:\temp\Python>

@@ -25,9 +25,9 @@ def coords_logged(x: int, y: int, old_value_x: int, old_value_y: int) -> bool:
     return logged_status
 
 
-def goto_coords(x_val: int, y_val: int, game_data: GameData):  # game_data instance of Settings class
+def goto_coords(x_val: int, y_val: int, game_data: GameData = GameData):  # game_data instance of Settings class
 
-    for i, pair in enumerate(game_data.d_cookie['CS_goto_xy'].split(';')):
+    for i, pair in enumerate(game_data.d_cookie['cs_goto_xy'].split(';')):
         x, y = pair.split(',')
         # util.debug('x y ', x, y, prompt=True)
         pag.click(int(x), int(y), 1, 0.3, 'left')
@@ -44,24 +44,16 @@ def move_to_click(x: int, y: int, wait_time: float = 1) -> None:
 
 
 def ocr(region: str) -> str:
-    ocr_text: str = ''
 
     x, y, w, h = [int(value) for value in region.split(',')]
     screenshot = pag.screenshot(region=(x, y, w, h))  # Take a screenshot and convert it to a NumPy array
     screenshot.save("screenshot.png")
-    util.debug('break after screenshot', 'after SS', prompt=True)
+    # util.debug('break after screenshot', 'after SS', prompt=True)
     screenshot_np = np.array(screenshot)  # screenshot.save('screenshot.png')
     reader = easyocr.Reader(['en'])  # Initialize the EasyOCR reader object
-    t_results = reader.readtext(screenshot_np, detail=0)  # Perform OCR on the image
 
-    ocr_text = ''.join(str(char) for l_result in t_results for char in l_result)
-
-    # ocr_text += [[str(char) for char in l_result] for l_result in t_results]
-    # for l_result in t_results:
-    #     for char in l_result:
-    #         ocr_text += str(char)
-
-    util.debug('OCR Text', ocr_text, prompt=True)  # The text detected in the image
+    ocr_text:str = ''.join(reader.readtext(screenshot_np, detail=0))
+    util.debug('OCR Text', ocr_text)  # The text detected in the image
     return ocr_text
 
 
@@ -76,7 +68,6 @@ def scrub_data(str_val: str, source: str = 'ocr', return_val: str = 'a_list') ->
             for value in l_coords:
                 str_value += util.add_delimiter(return_val, value, ',')
             return str_value
-
     else:
         for pair in str_val.split(';'):
             if len(pair):
